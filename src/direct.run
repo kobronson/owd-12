@@ -1,0 +1,13 @@
+#RESET
+reset;
+#LOAD THE MODEL
+model direct.mod;
+#CHANGE THE SOLVER (optional)
+option solver cplex;
+#SOLVE
+solve;
+#SHOW RESULTS
+display x_c,x_m;
+#OTHER OPTIONS TO DISPLAY
+display revenue, Aval_Time, Max_Mint, Max_Cinn;
+show revenue, Aval_Time, Max_Mint, Max_Cinn;
