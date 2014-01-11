@@ -7,7 +7,13 @@ option solver cplex;
 #SOLVE
 solve;
 #SHOW RESULTS
-display x_c,x_m;
+#display x_c,x_m;
 #OTHER OPTIONS TO DISPLAY
-display revenue, Aval_Time, Max_Mint, Max_Cinn;
-show revenue, Aval_Time, Max_Mint, Max_Cinn;
+
+show cel;#revenue, Aval_Time, Max_Mint, Max_Cinn;
+
+display cel,P1,P2,P3;
+display K1,K2,D1,D2,D3;
+display b1,b2,bu;
+display koszt_uwodornienia;
+display S1,S2;

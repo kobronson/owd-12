@@ -1,57 +1,104 @@
-# PART 1 DECLARATION OF VARIABLES (variables, parameters, sets etc)
-var p1>=4197;
-var p2>=4197;
-var p3>=4197;
+var D1_p1 integer >=0;
+var D1_p3 integer >=0;
+var K1_p1 integer >=0;
+var D2 integer >=0;
+var D3 integer >=0;
+var K1_p2 integer >=0;
+var K2_p2 integer >=0;
+var XA_1 integer >=0;
+var K2_p1 integer >=0;
+
+
+#progi S1 i S2
+var s11 integer >=0, <= 2041;
+var s12 integer >=0, <= 4425;
+var s13 integer >=0;
+
+var s21 integer >=0, <= 2733;
+var s22 integer >=0, <= 4018;
+var s23 integer >=0;
+
+var S1=s11+s12+s13;
+var S2=s21+s22+s23;
+
+
+var bu binary;
+var b1 binary;
+var b2 binary;
+
+
+var P1 = D1_p1 + (K1_p1 + K2_p1);
+var P2 =  (D2 + D3) + (K1_p2 + K2_p2);
+var P3 = D1_p3;
+
+var D1 = D1_p1 + D1_p3;
+var K1 = K1_p1 + K1_p2;
+var K2 = K2_p1 + K2_p2;
+
+
+#===================
+#ilosc produktow
+
+
+#subject to pp1: P1 >= 4917;
+#subject to pp2: P2 >= 4917;
+#subject to pp3: P3 >= 4917;
 
 
 
 
 
+#surowce
+subject to limit_s1: S1<= 11000; 
+subject to limit_s2: S2<= 12000;
 
 
-var zysk = 193*p1+136*p2+100*p3;
-var koszt = 130*s1+110*s2 + 19*s1_1+b1*14*s1_2+b2*10*s1_3 + 12*s2_1+16*s2_2+20*s2_3 + uwodornienie;
+#przygotowalnia
 
-
-
-
-
-p1= d1 + k1 lub k2
-p2= d2+ d3 + k1 lub k2
-p3 = d1
-
-
-#wstepna obrobka d1,d2,d3
-s1=s1_1+s1_2+s1_3;
-s2=s2_1+s2_2+s2_3;
-
-
-subject to koszt_obrobka_s2_1: s2_1 <= 2733;
-subject to koszt_obrobka_s2_2: 2733 <= s2_2 <= 6751 ;
-subject to koszt_obrobka_s2_3: 6751 <= s2_3;
-
-subject to wstepna_obrobka:  d1 + d2 + d3 <= 16700 # przepustowosc
-subject to wstepna_obrobka_d1: 0.4*s1 + 0.1*s2  #do produkcji P1 i P3
-subject to wstepna_obrobka_d2: 0.3*s1 + 0.8*s2  #do produkcji P2
-subject to wstepna_obrobka_d3: 0.3*s1 + 0.1*s2  #do produkcji P2
-
+subject to d1: D1=0.4*S1+0.1*S2;
+subject to d2: D2=0.3*S1+0.8*S2;
+subject to d3: D3=0.3*S1+0.1*S2;
+subject to przepustowosc_przygotowalni: D1+D2+D3<=16700;
 
 #uwodornienie
 
-subject to uwodornienie:  k1 + k2 <= 8367 # przepustowosc
-subject to uwodornienie_k1:  0.6*d2+0.6*d3  # produkcja p1 i p2
-subject to uwodornienie_k2:  0.4*d2+0.4*d3  # produkcja p1 i p2
+subject to k1: K1=0.6*D2+0.6*D3;
+subject to k2: K2=0.4*D2+0.4*D3;
+subject to przepustowosc_uwodornienia: K1+K2<=8367;
+
+#cel: koszty
+
+var koszt_surowcow=130*S1+110*S2;
+var koszt_obrobki_s1 = 19*s11+b1*14*s12+b2*10*s13;
 
 
 
 
+subject to binarne_s1_prog1: S1 >= 2041*b1;
+subject to binarne_s1_prog2: S1 >= 6439*b2;
+
+
+var koszt_obrobki_s2 = 12*s21+16*s22+20*s23;
 
 
 
 
-# PART 2 OBJECTIVE FUNCTION: name and mathematical expression
-maximize revenue:x_m+1.5*x_c;
-# PART 3 CONSTRAINTS: names and corresponding mathematical expressions
-subject to Aval_Time: (1/40)*x_m+(1/30)*x_c<=40;
-subject to Max_Mint: x_m<=1000;
-subject to Max_Cinn: x_c<=900;
+var koszt_uwodornienia= bu*15000;
+
+
+subject to binarne_wlacznik_uwodornienia: K1+K2>=1*bu;
+
+var zysk = 193*P1+136*P2+100*P3;
+var koszt_calkowity = koszt_surowcow + koszt_obrobki_s1 + koszt_obrobki_s2 + koszt_uwodornienia - zysk;
+
+
+
+#cel: niedobory
+var wzg_niedobor_p1 = 4097 - P1;
+var wzg_niedobor_p2 = 4097 - P2;
+var wzg_niedobor_p3 = 4097 - P3;
+
+minimize cel: wzg_niedobor_p1 + wzg_niedobor_p2 + wzg_niedobor_p3 + koszt_calkowity;
+
+
+
