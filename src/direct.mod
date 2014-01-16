@@ -24,26 +24,27 @@ var s23 integer >=0;
 var bu binary;
 var b1 binary;
 var b2 binary;
+var b3 binary;
 
 var S1=s11+s12+s13;
 var S2=s21+s22+s23;
-
-var P1 = D1_p1 + (K1_p1 + K2_p1);
-var P2 =  (D2 + D3) + (K1_p2 + K2_p2);
-var P3 = D1_p3;
 
 var D1 = D1_p1 + D1_p3;
 var K1 = K1_p1 + K1_p2;
 var K2 = K2_p1 + K2_p2;
 
 
+var P1 = D1_p1 + (K1_p1 + K2_p1);
+var P2 =  ((D2 + D3)-(K1+K2)) + (K1_p2 + K2_p2);
+var P3 = D1_p3;
+
+
+
+
 #===================
 #ilosc produktow
 
 
-#subject to pp1: P1 >= 4917;
-#subject to pp2: P2 >= 4917;
-#subject to pp3: P3 >= 4917;
 
 
 
@@ -74,22 +75,24 @@ var koszt_surowcow=130*S1+110*S2;
 
 
 var koszt_obrobki_s1 = 19*s11+14*s12+10*s13;
-#-picewise  linear mip modelling
-#-flaga dodatniosci wyra
+
 
 
 
 
 subject to prog1: 2041*b1 <= s11;
-subject to prog2: 4425*b2 <= s12;
-#subject to prog3: 2041*b3 <= s13;
+subject to prog1_:  s11 <= 2041;
+subject to prog2: 4398*b2 <= s12;
+subject to prog2_:  s12 <= 4398*b1;
 
-subject to prog1_:  s11 <= 2041*b1;
-subject to prog2_:  s12 <= 4425*b2;
-#subject to prog3_:  s12 <= 4425*b2;
+subject to prog3: 6439*b2 >= s13;
 
-#subject to binarne_s1_prog1: S1 >= 2041*b1;
-#subject to binarne_s1_prog2: S1 >= 6439*b2;
+
+
+
+
+
+
 
 
 var koszt_obrobki_s2 = 12*s21+16*s22+20*s23;
@@ -103,16 +106,16 @@ var koszt_uwodornienia= bu*15000;
 subject to binarne_wlacznik_uwodornienia:  (K1+K2)-8367*bu<=0;
 
 var zysk = 193*P1+136*P2+100*P3;
-var koszt_calkowity = koszt_surowcow + koszt_obrobki_s1 + koszt_obrobki_s2 + koszt_uwodornienia - zysk;
+var koszt_calkowity = koszt_surowcow + koszt_obrobki_s1 + koszt_obrobki_s2 + koszt_uwodornienia  ;
 
 
 
 #cel: niedobory
-var wzg_niedobor_p1 = (4197 - P1)/4197;
-var wzg_niedobor_p2 = (4197 - P2)/4197;
-var wzg_niedobor_p3 = (4197 - P3)/4197;
+var wzg_niedobor_p1 = (4917 - P1)/4917;
+var wzg_niedobor_p2 = (4917 - P2)/4917;
+var wzg_niedobor_p3 = (4917 - P3)/4917;
 
-minimize cel: wzg_niedobor_p1 ;#+ wzg_niedobor_p2 + wzg_niedobor_p3 + koszt_calkowity;
+
 
 
 
