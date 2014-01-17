@@ -1,0 +1,31 @@
+set SUROWCE := S1 S2;
+set POLPRODUKTY_D := D1 D2 D3;
+set POLPRODUKTY_K := K1 K2;
+set PROGI := 1 2 3;
+set KRYTERIA := NP1 NP2 NP3 NP4;
+
+param limit_surowcow := 	S1 11000
+							S2 12000;
+							
+param przepustowosc_przygotowalni := 16700;
+
+param zapotrzebowanie_przygotowalni : 	S1  S2 :=
+									D1	0.4 0.1
+									D2	0.3 0.8
+									D3	0.3 0.1;
+									
+
+
+
+param przepustowosc_uwodornienia := 8367;
+									
+param zapotrzebowanie_uwodornienia : 	D2  D3 :=
+									K1	0.6 0.6
+									K2	0.4 0.4;
+
+									
+									
+
+param s1_progi :=	1 2041
+					2 4398
+					3 6439;

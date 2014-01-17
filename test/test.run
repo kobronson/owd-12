@@ -1,0 +1,8 @@
+reset;
+option solver cplex;
+model test.mod;
+data test.dat;
+
+
+show ogr_surowce;
+show przygot_d;
