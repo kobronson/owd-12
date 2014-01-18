@@ -1,7 +1,8 @@
 set SUROWCE := S1 S2;
 set POLPRODUKTY_D := D1 D2 D3;
+set POLPRODUKTY_D_uwodorniane := D2 D3;
 set POLPRODUKTY_K := K1 K2;
-set PROGI := 1 2 3;
+set PROGI := pr1 pr2 pr3;
 set KRYTERIA := NP1 NP2 NP3 K;
 
 param limit_surowcow := 	S1 11000
@@ -26,13 +27,13 @@ param zapotrzebowanie_uwodornienia : 	D2  D3 :=
 									
 									
 
-param s1_progi_kosztow :=	1 2041
-							2 4398
-							3 6439;
+param s1_progi_kosztow :=	pr1 2041
+							pr2 4398
+							pr3 6439;
 
-param s2_progi_kosztow :=	1 2733
-							2 4018
-							3 0;	#nieuzywane ograniczenie
+param s2_progi_kosztow :=	pr1 2733
+							pr2 4018
+							pr3 0;	#nieuzywane ograniczenie
 
 param koszt_s = S1 130
 				S2 110;
@@ -53,4 +54,4 @@ param koszt_u := 15000;
 
 
 
-#param zapotrzebowanie_produktow := 4917;
+param zapotrzebowanie_produktow := 4917;
