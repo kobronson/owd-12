@@ -7,8 +7,9 @@
 \usepackage[OT4]{fontenc}
 \usepackage{geometry}
 \usepackage{ulem}
+\usepackage{amsfonts}
 
-
+\usepackage{mathtools}
 \RequirePackage{url}
 
 
@@ -31,6 +32,8 @@
 \author{Filip Nabrdalik}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \begin{document}
 \bibliographystyle{plain}
 
@@ -120,11 +123,99 @@ każdego produktu. System powinien wykorzystywać metodę punktu odniesienia do 
 \section{Model matematyczny}
 
 
-$s_{i,j}$  - ilość surowca $i$ sprzedawanego po koszcie $j$
+
+{\bf Zmienne decycyjne\\}
+\hfill \\
+Ilość surowca $i$ sprzedawanego po koszcie $j$
+$$s_{i,j} \ge 0, \; s_{i,j} \in \mathbb Z_{\ge 0}$$ 
+Ilość półproduktu D użytego do produkcji P
+$$d_{i,j}  \ge 0,\; d_{i,j} \in \mathbb Z_{\ge 0}$$  
+Ilość półproduktu K użytego do produkcji P i K
+$$k_{i,j}  \ge ,\; k_{i,j} \in \mathbb Z_{\ge 0}$$  
+
+
+
+{\bf Produkty\\}
+
+\hfill \\ 
+Ilość wytworzonych produktów
+$$p_{k}  \ge 0$$ 
+
+Półprodukt D1 i suma półproduktów K przeznaczonych do produkcji P1  wytworzona ilość produktu P1 = D1 + (K11 + K12) 
+$$p_1 = d_{1,1} + \sum_{i=1}^{K} k_{i,1} $$  
+
+wytworzona ilość produktu P2 = ((D2 + D3)-(K1+K2)) + (K12 + K22) , pierwszy nawias reprezentuje półprodukty D, 
+a drugi K przeznaczone do produkcji P2
+
+$$p_2 =  (\sum_{i=0}^{D} (d_{2,i} + d_{3,i}) -  \sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}) +   \sum_{i=1}^{P} k_{i,2}  $$ 
+wytworzona ilość produktu P3 = D3
+$$p_3 = d_{1,3} $$ 
+
+{\bf Surowce i półprodukty\\}
+\hfill \\ 
+
+Dzienny limit surowców
+$$\forall_{i \in S},\; \sum_{j=1}^{3}s_{i,j} \le  LS_i$$  
+
+Przepustowość przygotowalni D, D1+D2+D3 
+$$\sum_{i=1}^{D}\sum_{j=1}^{P}  d_{i,j} \le  LD$$
+
+Zapotrzebowanie przygotowalni  
+
+$$\forall_{i \in D},\; \sum_{j=1}^{P} d_{i,j} = \sum_{k=1}^{S} (ZP_{i,k} \cdot \sum_{l=1}^{3}s_{k,l}) $$ 
+
+Przepustowość uwodornienia K1+K2
+
+$$\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j} \le  LU$$
+
+Zapotrzebowanie uwodornienia 
+
+
+$$\forall_{i \in K},\; \sum_{j=1}^{P} k_{i,j} =  \sum_{j=2}^{P}  (d_{i,j} \cdot ZU_{i,j})$$ 
+
+{\bf Koszty\\}
+\hfill \\ 
+Koszty obróbki S1 (progi - koszty malejące):
+
+$$ PS1_{1}\cdot b_{1} \le s_{1,1} \le  PS1_{1}  $$
+$$ PS1_{2}\cdot b_{2} \le s_{1,2} \le  PS1_{1}\cdot b_{1}  $$
+$$ PS1_{3}\cdot b_{2} \le s_{1,3}   $$
+$$ \forall_{i={1,2}}  \;  0 \le b_{i} \le 1,\;b_{i} \in \mathbb Z_{\ge 0},   $$
+
+Koszty obróbki S2 (progi - koszty rosnące):
+
+$$ \forall_{i={1,2}} \;  \sum_{j =1}^{P} s_{i,j} \le PS2_{i}$$
+
+Koszty uwodornienia (flaga dodatniości):
+
+$$  bu \le 	\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}  \le LU \cdot bu $$
+$$   0 \le bu \le 1,\;bu \in \mathbb Z_{\ge 0},   $$
+
+
+{\bf Kryteria\\}
+
+Koszt całkowity:
+$$ c_1 = (\sum_{i=1}^{S}( {KS}_i \cdot \sum_{j=1}^{3}s_{i,j}))  + (\sum_{i=1}^{S} \sum_{j=1}^{3}(s_{i,j}\cdot KO_{i,j})) + bu\cdot KU$$
+
+Względne niedobory produktów P1, P2, P3:
+
+$$ c_2 = \frac{(Z - p_1)}{Z} $$
+$$ c_3 = \frac{(Z - p_2)}{Z} $$
+$$ c_4 = \frac{(Z - p_3)}{Z} $$
+
 
 
 
 \subsection{Metoda ważenia ocen}
+
+W początkowym etapie prac metoda ważenie ocen służyła do weryfikacji modelu. Kryteria niedoborów poszczególnych produktów zostały zagregowane w jedno.
+Załączona do sprawozdania dla porównania z metodą punktu referencyjnego.
+
+$$ \forall_{i={1,2},\; w_i \ge 0} , \; min: w_1 \cdot c1+w_2 \cdot (c_2+c_3+c_4) $$
+
+
+
+
 
 \subsection{Klasyczna metoda punktu odniesienia}
 
