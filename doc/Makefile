@@ -1,4 +1,4 @@
-SRC= Makefile owd.tex bibliografia.bib
+SRC= Makefile owd.tex
 
 # pdf, ps, gs, gs2, dvi
 default: t.ps
@@ -27,9 +27,8 @@ t: default
 t.dvi: $(SRC)
 	latex owd
 	latex owd
-	bibtex owd
-	latex owd 
-	latex owd
+
+
 
 t.pdf: t.dvi
 	dvipdf t.dvi

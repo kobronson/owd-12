@@ -15,7 +15,7 @@
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{3mm plus1mm minus1mm}
 
-\geometry{verbose,a4paper,tmargin=2.3cm,bmargin=2.3cm,lmargin=2.4cm,rmargin=2.4cm}
+\geometry{verbose,a4paper,tmargin=2.1cm,bmargin=2.1cm,lmargin=2.4cm,rmargin=2.4cm}
 \usepackage{graphicx} % wstawianie obrazkow
 
 
@@ -50,16 +50,96 @@
 
 
 
-\section{Treść zadania}
+\section{Skrócona treść zadania}
+
+{\bf OD Projekt \hfill Dane numer 12\\}
+Zakłady chemiczne produkują 3 rodzaje produktów P1, P2, P3. Wykorzystuje się do tego dwa rodzaje surowca S1 i S2 dostępnego w ilościach,
+odpowiednio 11000 i 12000 ton dziennie. Ceny surowca S1 i S2 wynoszą, odpowiednio 130 i 110 zł za tonę.
+
+Surowce są poddawane wstępnej obróbce w przygotowalni o całkowitej dziennej przepustowości 16700 ton. 
+w wyniku tego powstają trzy półprodukty: D1,D2 i D3. Ilość poszczególnych półproduktów w zależności 
+od surowca kształtuje się następująco 
+
+\begin{center}
+    \begin{tabular}{ | c | c | c | c |}
+    \hline
+    Surowiec & D1 & D2 & D3 \\ \hline
+	S1 & 0,4 & 0,3 & 0,3 \\ \hline
+	S2 & 0,1 & 0,8 & 0,1 \\ \hline
+    \end{tabular}
+\end{center}
+
+
+D1 może być bezpośrednio użyty do produkcji P1 i P3. Natomiast D2 i D3 mogą być wykorzystane
+do bezpośredniej produkcji P2 lub przeznaczone do dalszej obróbki w zakładzie uwodornienia. Koszt przygotowania surowca zależny jest od wielkości 
+dziennego przerobu danego surowca i jest przedstawiony w tabeli poniżej
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l |}
+    \hline
+    & Dzienny przerób & Koszt przygotowania \\ \hline
+	S1 & od 2041 ton włącznie & 19zł/tonę \\ \hline
+	& od 2041 do 6439 włącznie & 2041*19zł+14zł za kazdą tonę powyżej progu 2014 ton \\ \hline
+	& od 6439 & 2041*19zł+(6439-2041)*14zł+10zł za kazdą tonę powyżej progu 6439 ton \\ \hline
+	S2 & od 2733 ton włącznie & 12zł/tonę \\ \hline
+	& od 2733 do 6751 włącznie & 2733*12zł+16zł za kazdą tonę powyżej progu 2014 ton \\ \hline
+	& od 6751 & 2733*12zł+(6751-2733)*16zł+20zł za kazdą tonę powyżej progu 6751 ton \\ \hline
+    \end{tabular}
+\end{center}
+
+
+
+Zakład uwodornienia o przepustowości dziennej 8637 ton wytwarza półprodukty K1 i K2. Ilość poszczególnych półproduktów w zależności od surowca kształtuje się następująco
+
+
+
+\begin{center}
+    \begin{tabular}{ | c | c | c |}
+    \hline
+    Półprodukt & D2 & D3 \\ \hline
+	K1 & 0,6 & 0,6 \\ \hline
+	K2 & 0,4 & 0,4 \\ \hline
+    \end{tabular}
+\end{center}
+
+
+Półprodukty Ki i K2 mogą być użyte do produkcji P1 lub P2, ale nie mogą być użyte do wytworzenia P3. Jeśli 
+kład uwodornienia pracuje, dzienny koszt jego pracy (niezależnie od ilości przetworzonych produktów) wynosi
+15 tys. zł. Jeśli nie pracuje, dzienny koszt jest zerowy. Cena sprzedaży hurtowej wynosi: 193 zł/tonę P1, 136 zł/tonę i
+100 zł/tonę P3. Zawarte umowy wymagają dostarczenia co najmniej 4917 ton każdego produktu.
+
+Dany produkt finalny jest wytwarzany z półproduktów D1, D2, D3, K1 lub K2 bezpośrednio bez utraty masy, jednak zgodnie
+z zasadami opisanymi wcześniej.
+
+Należy zaprojektować system wspomagania decyzji, w którym są 4 kryteria: całkowity koszt produkcji oraz względne niedobory
+każdego produktu. System powinien wykorzystywać metodę punktu odniesienia do agregacji kryteriów.
+
+
+
+\section{Model matematyczny}
+
+
+$s_{i,j}$  - ilość surowca $i$ sprzedawanego po koszcie $j$
+
+
+
+\subsection{Metoda ważenia ocen}
+
+\subsection{Klasyczna metoda punktu odniesienia}
+
+\section{Wyniki}
+
+\subsection{Ważenie ocen}
+
+\subsection{Punkt referencyjny}
+
+
+\section{Załączniki i instrukcja}
 
 
 
 
-
-%BIBLIOGRAFIA
-\nocite{*}
-\renewcommand\refname{\section{Bibliografia}}
-\bibliography{bibliografia}
 
 
 \end{document}
