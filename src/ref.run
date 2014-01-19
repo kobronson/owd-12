@@ -1,32 +1,27 @@
 reset;
 
-model direct.mod;
+model model.mod;
 
 option solver cplex;
 
+
+###KLASYCZNA METODA PUNKTU ODNIESIENIA
 var v;
 var z1;var z2;var z3;var z4;
 
+
+
+
+
 param l1 := 1;param l2 := 1;param l3 := 1;param l4 := 1;
 
-#aspiracja
-#nadir
-# param a1:=1844460; 	#koszt_calkowity 0  1844460
-# param a2 :=1; #niedobor p1 -1.63372 1
-# param a3:=1; 	#niedobor p2  -0.699207 1
-# param a4:=1; 	#niedobor p3 0.0654871 1
 
-#utopia
- # param a1:=0; 	#koszt_calkowity  0  1844460
- # param a2 :=-1.63372; #niedobor p1 -1.63372 1
- # param a3:=-0.699207; 	#niedobor p2  -0.699207 1
- # param a4:=0.0654871 ; 	#niedobor p3 0.0654871 1
+ param a1:=0; 	
+ param a2 :=-1.63372; 
+ param a3:=-0.699207; 	
+ param a4:=0.0654871 ; 	
 
 
-  param a1:=1500000; 	#koszt_calkowity  0  1844460
-  param a2 :=-2.9; #niedobor p1 -1.63372 1
- param a3:=-0.699207; 	#niedobor p2  -0.699207 1
- param a4:=0.0654871 ; 	#niedobor p3 0.0654871 1
 
 
 param beta = 0.001;

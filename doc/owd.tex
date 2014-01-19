@@ -169,10 +169,10 @@ $KO =
 Ilość surowca $i$ obrabianego po koszcie $j$: \\
 $s_{i,j} \ge 0, \; s_{i,j} \in \mathbb Z_{\ge 0}$\\
 \hfill\\
-Ilość półproduktu D użytego do produkcji P: \\
+Ilość półproduktu D użytego do produkcji P i K: \\
 $d_{i,j}  \ge 0,\; d_{i,j} \in \mathbb Z_{\ge 0}$  \\
 \hfill\\
-Ilość półproduktu K użytego do produkcji P i K: \\
+Ilość półproduktu K użytego do produkcji P: \\
 $k_{i,j}  \ge ,\; k_{i,j} \in \mathbb Z_{\ge 0}$ \\  
 
 
@@ -269,7 +269,7 @@ $$ \forall_{i={1,2},\; w_i \ge 0} , \; min: w_1 \cdot c_1+w_2 \cdot (c_2+c_3+c_4
 Parametry:
 \begin{flalign*}
 \beta = 0.001\\
-\mathcal{E} = 0.0005\\
+\mathcal{E} = 0.00005\\
 \forall_{i \in C} \; \lambda_i =[1, 1, 1, 1]\\
 \end{flalign*}
 
@@ -315,7 +315,7 @@ kosztu otrzymuje utopię dla agregowanych niedoborów produktów.
 \begin{center}
     \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c |}
     \hline
-    $w_k$ & $w_n$ & $S$ & $D$ & $K$ & $P$ & Koszt & Wzg. Niedobór P1  & Wzg. Niedobór P2 & Wzg. Niedobór P3 \\ \hline
+    $w_k$ & $w_n$ & $S$ & $D$ & $K$ & $P$ & \textcolor{orange!80}{Koszt} & \textcolor{orange!80}{Wzg. nd. P1}  & \textcolor{orange!80}{Wzg. nd. P2} & \textcolor{orange!80}{Wzg. nd. P3} \\ \hline
 	0 & 1 &  [11000, 1950] &  [4595, 4860, 3495] &  [5013, 3342] &  [3342, 5013, 4595] & 1844460 & 0.320317 & -0.0195241 & 0.0654871\\ \hline
 	$w_k \ne 0$ & $w_n \ne 1$ &  [0, 0] &  [0, 0, 0] &  [0, 0] &  [0, 0, 0] & 0 & 1 & 1 & 1 \\ \hline
     \end{tabular}
@@ -334,7 +334,7 @@ kosztu otrzymuje utopię dla agregowanych niedoborów produktów.
     \begin{tabular}{ | l | c | c | c | c | c | c | c | c |c |}
     \hline
 	
-    $a$ & $S$ & $D$ & $K$ & $P$ & Koszt & Wzg. nd. P1  & Wzg. nd. P2 & Wzg. nd. P3 & $zysk-koszt$ \\ \hline	 
+    $a$ & $S$ & $D$ & $K$ & $P$ & \textcolor{orange!80}{Koszt} & \textcolor{orange!80}{Wzg. nd. P1}  & \textcolor{orange!80}{Wzg. nd. P2} & \textcolor{orange!80}{Wzg. nd. P3} & $zysk-koszt$ \\ \hline	 
 	 \textcolor{red!70}{[1844460, 1, 1, 1]} &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.1234  & 0.121  & 0.121  & 6889 \\  \hline
 	 \textcolor{green!80}{[0, -1.633, -0.699, 0.065]} &  [10990, 1940] & [4590, 4849, 3491] & [5004, 3336] & [8657, 4043, 230] & 1841761 & -0.760  & 0.177  & 0.953  & 401888 \\  \hline
 	 [1800000, -1.633, -0.699, 0.065] &  [10760, 2110] & [4515, 4916, 3439] & [5013, 3342] & [8664, 4004, 202] & 1831077 & -0.762  & 0.1857  & 0.958  & 405819 \\  \hline
