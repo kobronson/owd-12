@@ -6,15 +6,19 @@ option solver cplex;
 
 param wn;
 param wk;
-minimize cel: -wzg_niedobor_p1; #wn*(wzg_niedobor_p1 + wzg_niedobor_p2 + wzg_niedobor_p3) + wk*koszt_calkowity;
+minimize cel: wn*(wzg_niedobor_p1 + wzg_niedobor_p2 + wzg_niedobor_p3) + wk*koszt_calkowity;
 
 
 
-
+param n = 30; #liczba probek
+for {i in 1 .. n+1}
+{ 
+let wn := (i-1)/(n);
+let wk := 1 - wn;
 
 
 solve;
- #printf "%d   wk=%2.4f wn=%2.4f  ", i, wk, wn; 
+ printf "%d   wk=%2.4f wn=%2.4f  ", i, wk, wn; 
 display cel,P1,P2,P3;
 display K1,K2,D1,D2,D3;
 display b1,b2,bu;
@@ -26,3 +30,4 @@ display S2,s21,s22,s23;
 display wzg_niedobor_p1,wzg_niedobor_p2,wzg_niedobor_p3;
 display koszt_calkowity;
 
+}

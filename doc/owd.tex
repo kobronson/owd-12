@@ -8,6 +8,11 @@
 \usepackage{geometry}
 \usepackage{ulem}
 \usepackage{amsfonts}
+\usepackage{lscape}	
+
+\usepackage[fleqn]{amsmath}
+
+
 
 \usepackage{mathtools}
 \RequirePackage{url}
@@ -16,8 +21,10 @@
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{3mm plus1mm minus1mm}
 
-\geometry{verbose,a4paper,tmargin=2.1cm,bmargin=2.1cm,lmargin=2.4cm,rmargin=2.4cm}
+\geometry{verbose,a4paper,tmargin=2.1cm,bmargin=2.1cm,lmargin=2.1cm,rmargin=2.1cm}
 \usepackage{graphicx} % wstawianie obrazkow
+
+\usepackage{colortbl}
 
 
 
@@ -188,20 +195,22 @@ $$ \forall_{i={1,2}} \;  \sum_{j =1}^{P} s_{i,j} \le PS2_{i}$$
 
 Koszty uwodornienia (flaga dodatniości):
 
-$$  bu \le 	\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}  \le LU \cdot bu $$
-$$   0 \le bu \le 1,\;bu \in \mathbb Z_{\ge 0},   $$
-
+\begin{flalign*}
+  bu \le 	\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}  \le LU \cdot bu , \; 0 \le bu \le 1,\;bu \in \mathbb Z_{\ge 0},
+\end{flalign*}
 
 {\bf Kryteria\\}
 
 Koszt całkowity:
-$$ c_1 = (\sum_{i=1}^{S}( {KS}_i \cdot \sum_{j=1}^{3}s_{i,j}))  + (\sum_{i=1}^{S} \sum_{j=1}^{3}(s_{i,j}\cdot KO_{i,j})) + bu\cdot KU$$
-
+\begin{flalign*}
+ c_1 = (\sum_{i=1}^{S}( {KS}_i \cdot \sum_{j=1}^{3}s_{i,j}))  + (\sum_{i=1}^{S} \sum_{j=1}^{3}(s_{i,j}\cdot \mathit{KO}_{i,j})) + bu\cdot \mathit{KU}
+\end{flalign*}
 Względne niedobory produktów P1, P2, P3:
-
-$$ c_2 = \frac{(Z - p_1)}{Z} $$
-$$ c_3 = \frac{(Z - p_2)}{Z} $$
-$$ c_4 = \frac{(Z - p_3)}{Z} $$
+\begin{flalign*}
+ c_2 = \frac{(Z - p_1)}{Z}  \\
+ c_3 = \frac{(Z - p_2)}{Z}  \\
+ c_4 = \frac{(Z - p_3)}{Z}  \\
+\end{flalign*}
 
 
 
@@ -209,23 +218,107 @@ $$ c_4 = \frac{(Z - p_3)}{Z} $$
 \subsection{Metoda ważenia ocen}
 
 W początkowym etapie prac metoda ważenie ocen służyła do weryfikacji modelu. Kryteria niedoborów poszczególnych produktów zostały zagregowane w jedno.
-Załączona do sprawozdania dla porównania z metodą punktu referencyjnego.
+Metoda wagowa załączona do sprawozdania dla porównania z metodą punktu referencyjnego.
 
-$$ \forall_{i={1,2},\; w_i \ge 0} , \; min: w_1 \cdot c1+w_2 \cdot (c_2+c_3+c_4) $$
-
+$$ \forall_{i={1,2},\; w_i \ge 0} , \; min: w_1 \cdot c_1+w_2 \cdot (c_2+c_3+c_4) $$
 
 
 
 
 \subsection{Klasyczna metoda punktu odniesienia}
 
+Parametry:
+\begin{flalign*}
+\beta = 0.001\\
+\mathcal{E} = 0.0005\\
+\forall_{i \in C} \; \lambda_i =[1, 1, 1, 1]\\
+\end{flalign*}
+
+Prarametr aspiracji $\forall_{c \in C} \;  a_c$. \\
+Wartość funkcji osiągnięcia dla każdego z kryteriów $\forall_{c \in C} \;  z_c$. Minimalna funkcja osiągnięcia $v$. 
+
+
+
+\begin{flalign*}
+v \le z_c \;\forall_{c \in C}\\
+ z_c \le \cdot \beta \cdot \lambda_c \cdot (c_c - a_c) \;\forall_{c \in C} \;\\
+z_c \le \cdot \lambda_c \cdot (c_c - a_c)\; \forall_{c \in C} \;\\
+max: \; v+ \mathcal{E} \sum_{c \in C} z_c  
+\end{flalign*}
+
 \section{Wyniki}
 
+Dla symulacji przeprowadzonej metodą ważenia ocen nie uzyskano zadowalających wyników. W 50 krokach
+kryterium kosztu zdecydowanie przeważa nad niedoborami produktów w związku z czym produkcja się nie odbywa. Dopiero dla zerowej wagi
+kosztu otrzymuje utopię dla zagregowanych niedoborów produktów.  
+
+\begin{center}
+    \begin{tabular}{ | l | l | l |}
+    \hline
+    Kryterium & Utopia & Nadir \\ \hline
+	$c_1$ (koszt) & 0 & 1844460 \\ \hline
+	$c_2$ (wzg. niedobór P1) &-1.63372 &  1\\ \hline
+	$c_3$ (wzg. niedobór P2) &-0.699207 & 1\\ \hline
+	$c_4$ (wzg. niedobór P3) & 0.0654871& 1	\\ \hline
+    \end{tabular}
+\end{center}
+
+
+
+
+
+\newpage
+
+\begin{landscape}
 \subsection{Ważenie ocen}
+
+
+\begin{center}
+    \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c |}
+    \hline
+    $w_k$ & $w_n$ & $S$ & $D$ & $K$ & $P$ & Koszt & Wzg. Niedobór P1  & Wzg. Niedobór P2 & Wzg. Niedobór P3 \\ \hline
+	0 & 1 &  [11000, 1950] &  [4595, 4860, 3495] &  [5013, 3342] &  [3342, 5013, 4595] & 1844460 & 0.320317 & -0.0195241 & 0.0654871\\ \hline
+	$w_k \ne 0$ & $w_n \ne 1$ &  [0, 0] &  [0, 0, 0] &  [0, 0] &  [0, 0, 0] & 0 & 1 & 1 & 1 \\ \hline
+    \end{tabular}
+\end{center}
+
+
+
+
+
 
 \subsection{Punkt referencyjny}
 
 
+
+\begin{center}
+    \begin{tabular}{ | l | c | c | c | c | c | c | c | c |c |}
+    \hline
+	
+    $a$ & $S$ & $D$ & $K$ & $P$ & Koszt & Wzg. nd. P1  & Wzg. nd. P2 & Wzg. nd. P3 & $zysk-koszt$ \\ \hline	 
+	 [1844460, 1, 1, 1] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.1234  & 0.121  & 0.121  & 6889 \\  \hline
+	 [0, -1.633, -0.699, 0.065] &  [10990, 1940] & [4590, 4849, 3491] & [5004, 3336] & [8657, 4043, 230] & 1841761 & -0.760  & 0.177  & 0.953  & 401888 \\  \hline
+	 [1800000, -1.633, -0.699, 0.065] &  [10760, 2110] & [4515, 4916, 3439] & [5013, 3342] & [8664, 4004, 202] & 1831077 & -0.762  & 0.1857  & 0.958  & 405819 \\  \hline
+	 [1800000, -2, -0.699, 0.065] &  [10750, 2100] & [4510, 4905, 3435] & [5004, 3336] & [9107, 3743, 0] & 1828273 & -0.852  & 0.238  & 1  & 438426 \\  \hline
+	 [1800000, -3, -0.699, 0.065] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [12950, 0, 0] & 1844461 & -1.633  & 1  & 1  & 654889 \\  \hline
+	 [1500000, -1.633, -0.699, 0.065] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [8626, 4042, 272] & 184284 & -0.754  & 0.1780  & 0.944  & 398881 \\  \hline
+	 [1500000, -1, -1, -1] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.123  & 0.121  & 0.121  & 6889\\ \hline
+	 [1800000, 0, 0, 0] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.123  & 0.121  & 0.121  & 6889 \\ \hline
+	 [1800000, 0, 0.5, 0.5] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [6020, 3494, 3426] & 1842837 & -0.224  & 0.289  & 0.303  & 136807 \\ \hline
+	 [1000000, -1, 0.5, 0.5] &  [10940, 1990] & [4575, 4874, 3481] & [5013, 3342] & [9232, 1857, 1841] & 1841261 & -0.877  & 0.622  & 0.625  & 377167 \\ \hline
+	 [1000000, 0.5, -1, 0.5] &  [10880, 2030] & [4555, 4888, 3467] & [5013, 3342] & [2258, 8354, 2298] & 1837809 & 0.540  & -0.699  & 0.532  & -36071 \\ \hline
+	 [1000000, 0.5, 0.5, -1] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [4184, 4172, 4584] & 1842861 & 0.149  & 0.151  & 0.067  & -9557\\ \hline
+	 [1000000, -1, -1, 1] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4598, 8352, 0] & 1844461 & 0.064  & -0.6986  & 1  & 178825 \\ \hline
+	 [1000000, -2, 0, -1] &  [10850, 2050] & [4545, 4895, 3460] & [5013, 3342] & [9771, 1, 3128] & 1836129 & -0.987  & 0.9998  & 0.363 & 362610 \\ \hline
+	 
+	 
+    \end{tabular}
+\end{center}
+
+
+
+
+\end{landscape}
 \section{Załączniki i instrukcja}
 
 

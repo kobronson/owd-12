@@ -7,13 +7,27 @@ option solver cplex;
 var v;
 var z1;var z2;var z3;var z4;
 
-param l1 := 0.01;param l2 := 1;param l3 := 1;param l4 := 1;
+param l1 := 1;param l2 := 1;param l3 := 1;param l4 := 1;
 
 #aspiracja
-param a1:=8; 	#koszt_calkowity 0  1844460
-param a2 :=-10; #niedobor p1 -0.0195241 1
-param a3:=-8; 	#niedobor p2  -0.699207 1
-param a4:=8; 	#niedobor p3 0.0654871 1
+#nadir
+# param a1:=1844460; 	#koszt_calkowity 0  1844460
+# param a2 :=1; #niedobor p1 -1.63372 1
+# param a3:=1; 	#niedobor p2  -0.699207 1
+# param a4:=1; 	#niedobor p3 0.0654871 1
+
+#utopia
+ # param a1:=0; 	#koszt_calkowity  0  1844460
+ # param a2 :=-1.63372; #niedobor p1 -1.63372 1
+ # param a3:=-0.699207; 	#niedobor p2  -0.699207 1
+ # param a4:=0.0654871 ; 	#niedobor p3 0.0654871 1
+
+
+  param a1:=1500000; 	#koszt_calkowity  0  1844460
+  param a2 :=-2.9; #niedobor p1 -1.63372 1
+ param a3:=-0.699207; 	#niedobor p2  -0.699207 1
+ param a4:=0.0654871 ; 	#niedobor p3 0.0654871 1
+
 
 param beta = 0.001;
 param epsilon = 0.0001/2;
@@ -62,3 +76,6 @@ display koszt_calkowity,koszt_surowcow,koszt_obrobki_s1,koszt_obrobki_s2,koszt_u
 display zysk, wzg_niedobor_p1,wzg_niedobor_p2,wzg_niedobor_p3;
 display cel,P1,P2,P3;
 display zysk_netto;
+
+
+ printf " [%d, %2.4f, %2.4f, %2.4f] &  [%d, %d] & [%d, %d, %d] & [%d, %d] & [%d, %d, %d] & %d & %2.4f  & %2.4f  & %2.4f  & %d", a1,a2,a3,a4,S1,S2,D1,D2,D3,K1,K2,P1,P2,P3,koszt_calkowity,wzg_niedobor_p1,wzg_niedobor_p2,wzg_niedobor_p3,zysk_netto; 
