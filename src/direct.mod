@@ -1,5 +1,7 @@
 var D1_p1 integer >=0;
 var D1_p3 integer >=0;
+var D2 integer >=0;
+var D3 integer >=0;
 var D1 = D1_p1 + D1_p3;
 
 
@@ -10,8 +12,7 @@ var K2_p1 integer >=0;
 var K1 = K1_p1 + K1_p2;
 var K2 = K2_p1 + K2_p2;
 
-var D2 integer >=0;
-var D3 integer >=0;
+
 
 
 
@@ -83,12 +84,17 @@ var koszt_obrobki_s2 = 12*s21+16*s22+20*s23;
 
 #koszt uwodornienia s2
 var koszt_uwodornienia= bu*15000;
-subject to flaga_kosztu_uwodornienia:  (K1+K2)-8367*bu<=0;
+subject to flaga_kosztu_uwodornienia:  (K1+K2)<=8367*bu;
+subject to flaga_kosztu_uwodornienia1:  (K1+K2)>=bu;
 
 var zysk = 193*P1+136*P2+100*P3;
 var koszt_calkowity = koszt_surowcow + koszt_obrobki_s1 + koszt_obrobki_s2 + koszt_uwodornienia  ;
 
 
+
+
+
+#NIDEDOBORY
 
 #cel: niedobory
 var wzg_niedobor_p1 = (4917 - P1)/4917;

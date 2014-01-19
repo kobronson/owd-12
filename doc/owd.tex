@@ -8,9 +8,11 @@
 \usepackage{geometry}
 \usepackage{ulem}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage{lscape}	
+\usepackage{xcolor}
 
-\usepackage[fleqn]{amsmath}
+
 
 
 
@@ -90,11 +92,11 @@ dziennego przerobu danego surowca i jest przedstawiony w tabeli poniżej
     \hline
     & Dzienny przerób & Koszt przygotowania \\ \hline
 	S1 & od 2041 ton włącznie & 19zł/tonę \\ \hline
-	& od 2041 do 6439 włącznie & 2041*19zł+14zł za kazdą tonę powyżej progu 2014 ton \\ \hline
-	& od 6439 & 2041*19zł+(6439-2041)*14zł+10zł za kazdą tonę powyżej progu 6439 ton \\ \hline
+	& od 2041 do 6439 włącznie & 2041*19zł+14zł za każdą tonę powyżej progu 2014 ton \\ \hline
+	& od 6439 & 2041*19zł+(6439-2041)*14zł+10zł za każdą tonę powyżej progu 6439 ton \\ \hline
 	S2 & od 2733 ton włącznie & 12zł/tonę \\ \hline
-	& od 2733 do 6751 włącznie & 2733*12zł+16zł za kazdą tonę powyżej progu 2014 ton \\ \hline
-	& od 6751 & 2733*12zł+(6751-2733)*16zł+20zł za kazdą tonę powyżej progu 6751 ton \\ \hline
+	& od 2733 do 6751 włącznie & 2733*12zł+16zł za każdą tonę powyżej progu 2014 ton \\ \hline
+	& od 6751 & 2733*12zł+(6751-2733)*16zł+20zł za każdą tonę powyżej progu 6751 ton \\ \hline
     \end{tabular}
 \end{center}
 
@@ -130,75 +132,112 @@ każdego produktu. System powinien wykorzystywać metodę punktu odniesienia do 
 \section{Model matematyczny}
 
 
+$S=2$ - surowce \\
+$P=3$ - produkty \\
+$D=3$ - półprodukty D \\
+$K=2$ - półprodukty uwodornione K \\
 
-{\bf Zmienne decycyjne\\}
+
+$LS=[11000 \;12000] $ - dzienny limit surowców \\
+$LD = 16700$ - przepustowość przygotowalni\\
+$LU = 8367$ - przepustowość uwodornienia \\ \hfill\\
+$ZP=
+\begin{bmatrix}
+0.4 & 0.1  \\
+0.3 & 0.8  \\
+0.4  & 0.1 \\
+\end{bmatrix} $ -zapotrzebowanie przygotowalni\\
+$ZU = 
+\begin{bmatrix}
+0.6 & 0.6  \\
+0.4 & 0.4  \\
+\end{bmatrix} $ -zapotrzebowanie uwodornienia\\ \hfill\\
+$PS1 = [2041 \; 4398 \; 6439] $ - progi dla ilości S1\\
+$PS2 = [2733 \; 4018 \; 0] $ - progi dla ilości S2\\ \hfill\\
+
+$KU =  15000 $ - dzienny koszt pracy zakładu uwodornienia\
+$KS = [130 \; 110] $ - koszt surowców S\\
+$KO = 
+\begin{bmatrix}
+19 & 14  & 10\\
+12 & 16 & 20 \\
+\end{bmatrix} $ - koszty obróbki S\\ \hfill\\
+
+
+{\bf Zmienne decyzyjne\\}
 \hfill \\
-Ilość surowca $i$ sprzedawanego po koszcie $j$
-$$s_{i,j} \ge 0, \; s_{i,j} \in \mathbb Z_{\ge 0}$$ 
-Ilość półproduktu D użytego do produkcji P
-$$d_{i,j}  \ge 0,\; d_{i,j} \in \mathbb Z_{\ge 0}$$  
-Ilość półproduktu K użytego do produkcji P i K
-$$k_{i,j}  \ge ,\; k_{i,j} \in \mathbb Z_{\ge 0}$$  
+Ilość surowca $i$ obrabianego po koszcie $j$: \\
+$s_{i,j} \ge 0, \; s_{i,j} \in \mathbb Z_{\ge 0}$\\
+\hfill\\
+Ilość półproduktu D użytego do produkcji P: \\
+$d_{i,j}  \ge 0,\; d_{i,j} \in \mathbb Z_{\ge 0}$  \\
+\hfill\\
+Ilość półproduktu K użytego do produkcji P i K: \\
+$k_{i,j}  \ge ,\; k_{i,j} \in \mathbb Z_{\ge 0}$ \\  
 
 
 
 {\bf Produkty\\}
 
-\hfill \\ 
-Ilość wytworzonych produktów
-$$p_{k}  \ge 0$$ 
+Ilość wytworzonych produktów:\\ \hfill\\
+$p_{k}  , \; \forall_{k \in P}$ \\
+\hfill\\ 
+Półprodukt D1 i suma półproduktów K przeznaczonych do produkcji P1  wytworzona ilość produktu P1 = D1 + (K11 + K12):\\ \hfill \\
+$p_1 = d_{1,1} + \sum_{i=1}^{K} k_{i,1} $  \\ \hfill\\
 
-Półprodukt D1 i suma półproduktów K przeznaczonych do produkcji P1  wytworzona ilość produktu P1 = D1 + (K11 + K12) 
-$$p_1 = d_{1,1} + \sum_{i=1}^{K} k_{i,1} $$  
 
-wytworzona ilość produktu P2 = ((D2 + D3)-(K1+K2)) + (K12 + K22) , pierwszy nawias reprezentuje półprodukty D, 
-a drugi K przeznaczone do produkcji P2
+Wytworzona ilość produktu P2 = ((D2 + D3)-(K1+K2)) + (K12 + K22) , pierwszy nawias reprezentuje półprodukty D, 
+a drugi K przeznaczone do produkcji P2:\\ \hfill\\
+ $p_2 =  (\sum_{i=0}^{D} (d_{2,i} + d_{3,i}) -  \sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}) +   \sum_{i=1}^{P} k_{i,2}  $\\ 
+ 
 
-$$p_2 =  (\sum_{i=0}^{D} (d_{2,i} + d_{3,i}) -  \sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}) +   \sum_{i=1}^{P} k_{i,2}  $$ 
-wytworzona ilość produktu P3 = D3
-$$p_3 = d_{1,3} $$ 
+Wytworzona ilość produktu P3 = D3:\\ \hfill\\
+ $p_3 = d_{1,3} $ \\
+\hfill\\
 
 {\bf Surowce i półprodukty\\}
 \hfill \\ 
 
-Dzienny limit surowców
-$$\forall_{i \in S},\; \sum_{j=1}^{3}s_{i,j} \le  LS_i$$  
-
-Przepustowość przygotowalni D, D1+D2+D3 
-$$\sum_{i=1}^{D}\sum_{j=1}^{P}  d_{i,j} \le  LD$$
-
-Zapotrzebowanie przygotowalni  
-
-$$\forall_{i \in D},\; \sum_{j=1}^{P} d_{i,j} = \sum_{k=1}^{S} (ZP_{i,k} \cdot \sum_{l=1}^{3}s_{k,l}) $$ 
-
-Przepustowość uwodornienia K1+K2
-
-$$\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j} \le  LU$$
-
-Zapotrzebowanie uwodornienia 
+Dzienny limit surowców:\\ \hfill\\
+$\forall_{i \in S},\; \sum_{j=1}^{3}s_{i,j} \le  LS_i$ \\ 
 
 
-$$\forall_{i \in K},\; \sum_{j=1}^{P} k_{i,j} =  \sum_{j=2}^{P}  (d_{i,j} \cdot ZU_{i,j})$$ 
+Przepustowość przygotowalni D, D1+D2+D3: \\ \hfill\\
+$\sum_{i=1}^{D}\sum_{j=1}^{P}  d_{i,j} \le  LD$ \\
+\hfill\\
+Zapotrzebowanie przygotowalni:\\   
 
+$\forall_{i \in D},\; \sum_{j=1}^{P} d_{i,j} = \sum_{k=1}^{S} (ZP_{i,k} \cdot \sum_{l=1}^{3}s_{k,l}) $\\
+\hfill\\
+Przepustowość uwodornienia K1+K2:\\ 
+
+$\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j} \le  LU$\\
+\hfill\\
+Zapotrzebowanie uwodornienia:\\  
+
+
+$\forall_{i \in K},\; \sum_{j=1}^{P} k_{i,j} =  \sum_{j=2}^{P}  (d_{i,j} \cdot ZU_{i,j})$ \\ 
+\hfill\\
 {\bf Koszty\\}
 \hfill \\ 
-Koszty obróbki S1 (progi - koszty malejące):
+Koszty obróbki S1 (progi - koszty malejące):\\ 
 
-$$ PS1_{1}\cdot b_{1} \le s_{1,1} \le  PS1_{1}  $$
-$$ PS1_{2}\cdot b_{2} \le s_{1,2} \le  PS1_{1}\cdot b_{1}  $$
-$$ PS1_{3}\cdot b_{2} \le s_{1,3}   $$
-$$ \forall_{i={1,2}}  \;  0 \le b_{i} \le 1,\;b_{i} \in \mathbb Z_{\ge 0},   $$
+$ PS1_{1}\cdot b_{1} \le s_{1,1} \le  PS1_{1}  $ \\
+$ PS1_{2}\cdot b_{2} \le s_{1,2} \le  PS1_{1}\cdot b_{1}  $ \\
+$ PS1_{3}\cdot b_{2} \le s_{1,3}   $ \\
+$ \forall_{i={1,2}}  \;  0 \le b_{i} \le 1,\;b_{i} \in \mathbb Z_{\ge 0},   $ \\
 
-Koszty obróbki S2 (progi - koszty rosnące):
+Koszty obróbki S2 (progi - koszty rosnące): \\ 
 
-$$ \forall_{i={1,2}} \;  \sum_{j =1}^{P} s_{i,j} \le PS2_{i}$$
+$ \forall_{i={1,2}} \;  \sum_{j =1}^{P} s_{i,j} \le PS2_{i}$\\
 
-Koszty uwodornienia (flaga dodatniości):
+Koszty uwodornienia (flaga dodatniości):\\ 
 
-\begin{flalign*}
+$
   bu \le 	\sum_{j=1}^{P}  \sum_{i=1}^{K} k_{i,j}  \le LU \cdot bu , \; 0 \le bu \le 1,\;bu \in \mathbb Z_{\ge 0},
-\end{flalign*}
-
+$\\
+\hfill\\
+\newpage
 {\bf Kryteria\\}
 
 Koszt całkowity:
@@ -217,7 +256,7 @@ Względne niedobory produktów P1, P2, P3:
 
 \subsection{Metoda ważenia ocen}
 
-W początkowym etapie prac metoda ważenie ocen służyła do weryfikacji modelu. Kryteria niedoborów poszczególnych produktów zostały zagregowane w jedno.
+W początkowym etapie prac metoda ważenie ocen służyła do weryfikacji modelu. Kryteria niedoborów poszczególnych produktów zostały agregowane w jedno.
 Metoda wagowa załączona do sprawozdania dla porównania z metodą punktu referencyjnego.
 
 $$ \forall_{i={1,2},\; w_i \ge 0} , \; min: w_1 \cdot c_1+w_2 \cdot (c_2+c_3+c_4) $$
@@ -234,32 +273,32 @@ Parametry:
 \forall_{i \in C} \; \lambda_i =[1, 1, 1, 1]\\
 \end{flalign*}
 
-Prarametr aspiracji $\forall_{c \in C} \;  a_c$. \\
-Wartość funkcji osiągnięcia dla każdego z kryteriów $\forall_{c \in C} \;  z_c$. Minimalna funkcja osiągnięcia $v$. 
+Parametr aspiracji $\forall_{i \in C} \;  a_i$. \\
+Wartość funkcji osiągnięcia dla każdego z kryteriów $\forall_{i \in C} \;  z_i$. Minimalna funkcja osiągnięcia $v$. Kryteria $c_i$ \; $\forall_{i \in C}$ 
 
 
 
 \begin{flalign*}
-v \le z_c \;\forall_{c \in C}\\
- z_c \le \cdot \beta \cdot \lambda_c \cdot (c_c - a_c) \;\forall_{c \in C} \;\\
-z_c \le \cdot \lambda_c \cdot (c_c - a_c)\; \forall_{c \in C} \;\\
-max: \; v+ \mathcal{E} \sum_{c \in C} z_c  
+v \le z_i \;\forall_{i \in C}\\
+ z_i \le \cdot \beta \cdot \lambda_i \cdot (c_i - a_i) \;\forall_{i \in C} \;\\
+z_i \le \cdot \lambda_i \cdot (c_i - a_i)\; \forall_{i \in C} \;\\
+max: \; v+ \mathcal{E} \sum_{i \in C} z_i  
 \end{flalign*}
 
 \section{Wyniki}
 
 Dla symulacji przeprowadzonej metodą ważenia ocen nie uzyskano zadowalających wyników. W 50 krokach
 kryterium kosztu zdecydowanie przeważa nad niedoborami produktów w związku z czym produkcja się nie odbywa. Dopiero dla zerowej wagi
-kosztu otrzymuje utopię dla zagregowanych niedoborów produktów.  
+kosztu otrzymuje utopię dla agregowanych niedoborów produktów.  
 
 \begin{center}
     \begin{tabular}{ | l | l | l |}
     \hline
     Kryterium & Utopia & Nadir \\ \hline
-	$c_1$ (koszt) & 0 & 1844460 \\ \hline
-	$c_2$ (wzg. niedobór P1) &-1.63372 &  1\\ \hline
-	$c_3$ (wzg. niedobór P2) &-0.699207 & 1\\ \hline
-	$c_4$ (wzg. niedobór P3) & 0.0654871& 1	\\ \hline
+	$c_1$ (koszt) & \textcolor{green!80}{ 0 }& \textcolor{red!70}{1844460} \\ \hline
+	$c_2$ (wzg. niedobór P1) &\textcolor{green!80}{-1.63372} & \textcolor{red!70}{ 1}\\ \hline
+	$c_3$ (wzg. niedobór P2) &\textcolor{green!80}{-0.699207} &\textcolor{red!70} {1}\\ \hline
+	$c_4$ (wzg. niedobór P3) &\textcolor{green!80}{0.0654871}& \textcolor{red!70}{1}	\\ \hline
     \end{tabular}
 \end{center}
 
@@ -296,18 +335,18 @@ kosztu otrzymuje utopię dla zagregowanych niedoborów produktów.
     \hline
 	
     $a$ & $S$ & $D$ & $K$ & $P$ & Koszt & Wzg. nd. P1  & Wzg. nd. P2 & Wzg. nd. P3 & $zysk-koszt$ \\ \hline	 
-	 [1844460, 1, 1, 1] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.1234  & 0.121  & 0.121  & 6889 \\  \hline
-	 [0, -1.633, -0.699, 0.065] &  [10990, 1940] & [4590, 4849, 3491] & [5004, 3336] & [8657, 4043, 230] & 1841761 & -0.760  & 0.177  & 0.953  & 401888 \\  \hline
+	 \textcolor{red!70}{[1844460, 1, 1, 1]} &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.1234  & 0.121  & 0.121  & 6889 \\  \hline
+	 \textcolor{green!80}{[0, -1.633, -0.699, 0.065]} &  [10990, 1940] & [4590, 4849, 3491] & [5004, 3336] & [8657, 4043, 230] & 1841761 & -0.760  & 0.177  & 0.953  & 401888 \\  \hline
 	 [1800000, -1.633, -0.699, 0.065] &  [10760, 2110] & [4515, 4916, 3439] & [5013, 3342] & [8664, 4004, 202] & 1831077 & -0.762  & 0.1857  & 0.958  & 405819 \\  \hline
-	 [1800000, -2, -0.699, 0.065] &  [10750, 2100] & [4510, 4905, 3435] & [5004, 3336] & [9107, 3743, 0] & 1828273 & -0.852  & 0.238  & 1  & 438426 \\  \hline
-	 [1800000, -3, -0.699, 0.065] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [12950, 0, 0] & 1844461 & -1.633  & 1  & 1  & 654889 \\  \hline
+	 [1800000, -2, -0.699, 0.065] &  [10750, 2100] & [4510, 4905, 3435] & [5004, 3336] & [9107, 3743, 0] & \textcolor{blue!80}{1828273} & -0.852  & 0.238  & 1  & 438426 \\  \hline
+	 [1800000, -3, -0.699, 0.065] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [12950, 0, 0] & 1844461 & \textcolor{blue!80}{ -1.633}  & 1  & 1  & \textcolor{blue!80}{654889} \\  \hline
 	 [1500000, -1.633, -0.699, 0.065] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [8626, 4042, 272] & 184284 & -0.754  & 0.1780  & 0.944  & 398881 \\  \hline
 	 [1500000, -1, -1, -1] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.123  & 0.121  & 0.121  & 6889\\ \hline
 	 [1800000, 0, 0, 0] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4310, 4320, 4320] & 1844461 & 0.123  & 0.121  & 0.121  & 6889 \\ \hline
 	 [1800000, 0, 0.5, 0.5] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [6020, 3494, 3426] & 1842837 & -0.224  & 0.289  & 0.303  & 136807 \\ \hline
 	 [1000000, -1, 0.5, 0.5] &  [10940, 1990] & [4575, 4874, 3481] & [5013, 3342] & [9232, 1857, 1841] & 1841261 & -0.877  & 0.622  & 0.625  & 377167 \\ \hline
-	 [1000000, 0.5, -1, 0.5] &  [10880, 2030] & [4555, 4888, 3467] & [5013, 3342] & [2258, 8354, 2298] & 1837809 & 0.540  & -0.699  & 0.532  & -36071 \\ \hline
-	 [1000000, 0.5, 0.5, -1] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [4184, 4172, 4584] & 1842861 & 0.149  & 0.151  & 0.067  & -9557\\ \hline
+	 [1000000, 0.5, -1, 0.5] &  [10880, 2030] & [4555, 4888, 3467] & [5013, 3342] & [2258, 8354, 2298] & 1837809 & 0.540  & \textcolor{blue!80}{ -0.699}  & 0.532  & -36071 \\ \hline
+	 [1000000, 0.5, 0.5, -1] &  [10970, 1970] & [4585, 4867, 3488] & [5013, 3342] & [4184, 4172, 4584] & 1842861 & 0.149  & 0.151  & \textcolor{blue!80}{0.067}  & -9557\\ \hline
 	 [1000000, -1, -1, 1] &  [11000, 1950] & [4595, 4860, 3495] & [5013, 3342] & [4598, 8352, 0] & 1844461 & 0.064  & -0.6986  & 1  & 178825 \\ \hline
 	 [1000000, -2, 0, -1] &  [10850, 2050] & [4545, 4895, 3460] & [5013, 3342] & [9771, 1, 3128] & 1836129 & -0.987  & 0.9998  & 0.363 & 362610 \\ \hline
 	 
@@ -315,11 +354,26 @@ kosztu otrzymuje utopię dla zagregowanych niedoborów produktów.
     \end{tabular}
 \end{center}
 
+Dla zadanych parametrów modelu zawsze opłaca się kierować półprodukty do uwodornienia. Największy zysk zakład uzyskuje produkując P1 kosztem niedoborów innych produktów. Najbardziej nieopłacalnym jest produkt P3.
+
 
 
 
 \end{landscape}
+
 \section{Załączniki i instrukcja}
+
+Załączniki:\\
+model.mod - plik z modelem\\
+wagi.run - metoda wagowa\\
+ref.run - metoda punkty odniesienia\\
+
+Uruchomienie:\\
+./ampl wagi.run\\
+lub \\
+./ampl ref.run\\
+
+
 
 
 
